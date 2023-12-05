@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.week0project.dto.CocktailDTO;
 import project.week0project.models.Cocktail;
 import project.week0project.services.CocktailService;
 
@@ -18,7 +17,7 @@ public class MainRestController {
     public MainRestController(CocktailService cocktailService) {
         this.cocktailService = cocktailService;
     }
-    @GetMapping("/random")
+    @GetMapping("/addrandom")
     public List<Cocktail> getRandomCocktail() {
         return cocktailService.getRandomCocktail();
     }
@@ -32,4 +31,15 @@ public class MainRestController {
     public List<Cocktail> getAlcoholic(){
         return cocktailService.getAlcoholic();
     }
+
+    @GetMapping("/allbyname")
+    public List<Cocktail> allByName(){
+        return cocktailService.findAllAndSortByName();
+    }
+
+    @GetMapping("/all")
+    public List<Cocktail> all(){
+        return cocktailService.findAll();
+    }
+
 }

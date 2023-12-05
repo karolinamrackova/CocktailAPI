@@ -18,7 +18,7 @@ public class MainController {
     }
 @GetMapping("/")
 public String index(Model model){
-        List<Cocktail> allCocktails = cocktailService.findAll();
+        List<Cocktail> allCocktails = cocktailService.findAllAndSortByName();
         model.addAttribute("allCocktails", allCocktails);
         return "index";
 }

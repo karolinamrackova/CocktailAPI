@@ -73,9 +73,12 @@ public class CocktailServiceImpl implements CocktailService {
     }
 
     @Override
-    public List<Cocktail> findAll() {
+    public List<Cocktail> findAllAndSortByName() {
         Sort sort = Sort.by(Sort.Order.asc("name"));
         return cocktailRepository.findAll(sort);
+    }
+    public List<Cocktail> findAll(){
+        return cocktailRepository.findAll();
     }
 
     @Override
