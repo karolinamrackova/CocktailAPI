@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.week0project.dto.CocktailDTO;
+import project.week0project.models.Cocktail;
 import project.week0project.services.CocktailService;
+
+import java.util.List;
 
 @RestController
 public class MainRestController {
@@ -14,7 +17,17 @@ public class MainRestController {
         this.cocktailService = cocktailService;
     }
     @GetMapping("/random")
-    public CocktailDTO getRandomCocktail() {
+    public List<Cocktail> getRandomCocktail() {
         return cocktailService.getRandomCocktail();
+    }
+
+    @GetMapping("/nonalcoholic")
+    public List<Cocktail> getNonAlcoholic(){
+        return cocktailService.getNonAlcoholic();
+    }
+
+    @GetMapping("/alcoholic")
+    public List<Cocktail> getAlcoholic(){
+        return cocktailService.getAlcoholic();
     }
 }

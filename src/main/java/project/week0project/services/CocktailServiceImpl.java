@@ -9,6 +9,7 @@ import project.week0project.repositories.CocktailRepository;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class CocktailServiceImpl implements CocktailService {
         this.cocktailApiService = cocktailApiService;
     }
 
-    public CocktailDTO getRandomCocktail() {
+    public List<Cocktail> getRandomCocktail() {
         try {
             // Make a call to the Retrofit service
             Call<CocktailDTO> call = cocktailApiService.getRandomCocktail();
@@ -31,8 +32,9 @@ public class CocktailServiceImpl implements CocktailService {
             if (response.isSuccessful()) {
                 // If the response is successful, save the data to the database
                 CocktailDTO cocktailDTO = response.body();
-                saveCocktailToDatabase(cocktailDTO);
-                return cocktailDTO;
+                List<Cocktail> cocktailList = dtoToList(cocktailDTO);
+                saveCocktailsToDatabase(cocktailList);
+                return cocktailList;
             } else {
                 // Handle error (e.g., log, throw an exception)
                 return null;
@@ -43,17 +45,29 @@ public class CocktailServiceImpl implements CocktailService {
         }
     }
 
-    public void saveCocktailToDatabase(CocktailDTO cocktailDTO) {
+    public List<Cocktail> dtoToList (CocktailDTO cocktailDTO){
+        List<Cocktail> listOfCocktails = new ArrayList<>();
         List<CocktailDTO.Drink> drinks = cocktailDTO.getDrinks();
-
         for (CocktailDTO.Drink drink : drinks) {
             Cocktail cocktail = new Cocktail();
             cocktail.setName(drink.getStrDrink());
             cocktail.setAlcoholic(drink.getStrAlcoholic());
             cocktail.setInstructions(drink.getStrInstructions());
-            cocktailRepository.save(cocktail);
+            listOfCocktails.add(cocktail);
         }
+        return listOfCocktails;
+    }
+    public void saveCocktailsToDatabase(List<Cocktail> list) {
+        cocktailRepository.saveAll(list);
     }
 
+    @Override
+    public List<Cocktail> getNonAlcoholic() {
+        return cocktailRepository.findCocktailByAlcoholicEqualsIgnoreCase("non alcoholic");
+    }
+    @Override
+    public List<Cocktail> getAlcoholic() {
+        return cocktailRepository.findCocktailByAlcoholicEqualsIgnoreCase("alcoholic");
+    }
 
 }
