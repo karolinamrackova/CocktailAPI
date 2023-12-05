@@ -1,6 +1,7 @@
 package project.week0project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import project.week0project.api.CocktailApiService;
 import project.week0project.dto.CocktailDTO;
@@ -11,6 +12,7 @@ import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CocktailServiceImpl implements CocktailService {
@@ -68,6 +70,30 @@ public class CocktailServiceImpl implements CocktailService {
     @Override
     public List<Cocktail> getAlcoholic() {
         return cocktailRepository.findCocktailByAlcoholicEqualsIgnoreCase("alcoholic");
+    }
+
+    @Override
+    public List<Cocktail> findAll() {
+        Sort sort = Sort.by(Sort.Order.asc("name"));
+        return cocktailRepository.findAll(sort);
+    }
+
+    @Override
+    public List<Cocktail> findRandom() {
+        List<Cocktail> list = new ArrayList<>();
+        Random random = new Random();
+
+        do {
+            int index = random.nextInt((int) cocktailRepository.count());
+            Cocktail cocktail = cocktailRepository.findCocktailById(index);
+
+            if (cocktail != null) {
+                list.add(cocktail);
+                break;
+            }
+        } while (true);
+
+        return list;
     }
 
 }

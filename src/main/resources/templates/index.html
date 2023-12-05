@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cocktails</title>
+</head>
+<body>
+<div class="header">
+    <h1 style="color: darkmagenta;" >Cocktail Website 🍹</h1>
+    <h2>
+        <a style="color: magenta;" th:href="@{/}">Show all</a> |
+        <a style="color: magenta;" th:href="@{/alcoholic}">Show only alcoholic</a> |
+        <a style="color: magenta;" th:href="@{/nonalcoholic}">Show only non-alcoholic</a> |
+        <a style="color: magenta;" th:href="@{/random}">Pick a cocktail for me! 🥳</a> |
+    </h2>
+    <h2><a style="color: magenta !important; text-decoration: underline; text-decoration-color: lawngreen" th:href="@{/add}">Add random cocktail 🍸</a></h2>
+</div>
+<br>
+<table>
+    <tr style="font-weight: bold; background: darkmagenta; color: white">
+        <td>Cocktail name</td>
+        <td>Alcoholic</td>
+        <td>Instructions</td>
+    </tr>
+    <tr th:each="cocktail: ${allCocktails}" th:sort="${cocktail.name}">
+        <td th:text="${cocktail.getName()}"></td>
+        <td th:text="${cocktail.getAlcoholic()}"></td>
+        <td th:text="${cocktail.getInstructions()}"></td>
+    </tr>
+</table>
+</body>
+</html>

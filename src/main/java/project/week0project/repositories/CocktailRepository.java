@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CocktailRepository extends JpaRepository<Cocktail, Integer> {
     List<Cocktail> findCocktailByAlcoholicEqualsIgnoreCase(String alcoholic);
+    Cocktail findCocktailById(Integer id);
 }

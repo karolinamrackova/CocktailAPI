@@ -11,4 +11,6 @@ public interface CocktailService {
 
     List<Cocktail> getNonAlcoholic();
     List<Cocktail> getAlcoholic();
+    List<Cocktail> findAll();
+    List<Cocktail> findRandom();
 }
