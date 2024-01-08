@@ -1,3 +1,3 @@
 # Cocktail API
 
-This is a web app using third-party API and connected to local database using MySQL. Basic front-end is included, but the main focus are the API endpoints.
+This is a web app using third-party API and connected to local database using MySQL and Retrofit. Authorization and authentification with Spring Security implemented. Basic frontend is included, but the main focus is the backend.
